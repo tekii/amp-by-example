@@ -12,6 +12,8 @@
     </style>
   </head>
   <body>
+    {{{elementsAfterBody}}}
+    {{^isEmbed}}
     <div id="close-preview">
       <a href=".." id="exit">
         View annotated Source
@@ -20,6 +22,7 @@
       {{#metadata.experiments.length}}
         {{> experiment.html}}
       {{/metadata.experiments.length}}
+    {{/isEmbed}}
     <article id="preview">
       {{#sections}}
       {{{preview}}}

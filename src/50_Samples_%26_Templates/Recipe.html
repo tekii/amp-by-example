@@ -5,15 +5,14 @@
 <!-- #### Introduction -->
 <!--
 This is a sample recipe AMP article demonstrating how to express machine-readable recipe data using JSON+LD. It uses AMP components that work well for recipe articles: amp-carousel (image gallery, reviews carousel), amp-social-share, and amp-list (related articles). There are also star ratings, read-only for now (see [this GitHub issue](https://github.com/ampproject/amphtml/issues/2691)).
-
-Make sure to click/tap "[SHOW PREVIEW](preview)" on the right!
 -->
+<!-- -->
 <!doctype html>
 <html ⚡>
 <head>
   <meta charset="utf-8">
-  <link rel="canonical" href="<%host%>/samples_templates/recipe/">
-  <title>Garlic-Studded Roast Lamb recipe</title>
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+
   <!-- #### Setup -->
   <!--
     Additionally used AMP components must be imported in the header.
@@ -23,7 +22,11 @@ Make sure to click/tap "[SHOW PREVIEW](preview)" on the right!
   <!-- For the list of related recipes. -->
   <script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>
   <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js"></script>
+  <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
 
+
+  <link rel="canonical" href="<%host%>/samples_templates/recipe/">
+  <title>Garlic-Studded Roast Lamb recipe</title>
 
   <!-- #### Metadata -->
   <!--
@@ -246,8 +249,6 @@ Make sure to click/tap "[SHOW PREVIEW](preview)" on the right!
     }
   </style>
 
-  <script async src="https://cdn.ampproject.org/v0.js"></script>
-
 </head>
 <body>
 
@@ -274,7 +275,7 @@ Make sure to click/tap "[SHOW PREVIEW](preview)" on the right!
   -->
   <p class="heading">
     <amp-social-share type="twitter" data-param-text="Amazing recipe that my friend made" width="45" height="33"></amp-social-share>
-    <amp-social-share type="facebook" width="45" height="33" data-attribution=254325784911610></amp-social-share>
+    <amp-social-share type="facebook" width="45" height="33" data-attribution="254325784911610"></amp-social-share>
     <amp-social-share type="gplus" width="45" height="33"></amp-social-share>
     <amp-social-share type="email" width="45" height="33"></amp-social-share>
     <amp-social-share type="pinterest" width="45" height="33"></amp-social-share>
@@ -412,7 +413,7 @@ Make sure to click/tap "[SHOW PREVIEW](preview)" on the right!
 
   <p class="heading">
     <amp-social-share type="twitter" data-param-text="Amazing recipe that my friend made" width="45" height="33"></amp-social-share>
-    <amp-social-share type="facebook" width="45" height="33" data-attribution=254325784911610></amp-social-share>
+    <amp-social-share type="facebook" width="45" height="33" data-attribution="254325784911610"></amp-social-share>
     <amp-social-share type="gplus" width="45" height="33"></amp-social-share>
     <amp-social-share type="email" width="45" height="33"></amp-social-share>
     <amp-social-share type="pinterest" width="45" height="33"></amp-social-share>
@@ -424,14 +425,14 @@ Make sure to click/tap "[SHOW PREVIEW](preview)" on the right!
   <!--
   It's a good idea to recommend related content to your readers. With `amp-list` it is possible to dynamically include personalized content into your AMPs. It's best to link to the AMP version of related content in order to keep the user in the fast AMP world. [Learn more about `amp-list`](/components/amp-list/)
   -->
-  <amp-list width=300 height=75 layout=responsive src="/json/related_articles.json">
+  <amp-list width="300" height="75" layout="responsive" src="/json/related_articles.json">
     <template type="amp-mustache">
-      <a class="card related" href={{url}}><amp-img width="101" height="75" src="{{thumbnail}}"></amp-img><span>{{title}}</span></a>
+      <a class="card related" href="{{url}}"><amp-img width="101" height="75" src="{{thumbnail}}"></amp-img><span>{{title}}</span></a>
     </template>
   </amp-list>
 
   <!--
-  #### Analytics
+  #### User Analytics
   -->
   <!--
   Analytics must be configured in the body. Here we use Google Analytics to track pageviews.

@@ -12,7 +12,7 @@ This is a sample template for a news article in AMP. It demonstrates the usage o
 <html ⚡>
   <head>
     <meta charset="utf-8">
-    <link rel="canonical" href="<%host%>/samples_templates/news_article/">
+      <script async src="https://cdn.ampproject.org/v0.js"></script>
     <!-- #### Setup -->
     <!--
       All additionally used AMP components must be imported in the header.
@@ -23,6 +23,10 @@ This is a sample template for a news article in AMP. It demonstrates the usage o
     <script async custom-element="amp-user-notification" src="https://cdn.ampproject.org/v0/amp-user-notification-0.1.js"></script>
     <script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>
     <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js"></script>
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+    <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
+
+    <link rel="canonical" href="<%host%>/samples_templates/news_article/">
 
     <!--
     #### Metadata
@@ -55,15 +59,14 @@ This is a sample template for a news article in AMP. It demonstrates the usage o
       },
       "image": {
         "@type": "ImageObject",
-        "url": "<%host%>/img/landscape_lake_1280x853.jpg",
-        "height": 2000,
-        "width": 800
+        "url": "<%host%>/img/landscape_lake_1280x857.jpg",
+        "height": 1280,
+        "width": 857
       }
     }
     </script>
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
-      <script async src="https://cdn.ampproject.org/v0.js"></script>
       <style amp-custom>
   .carousel .slide > amp-img > img {
     object-fit: contain;
@@ -138,12 +141,12 @@ This is a sample template for a news article in AMP. It demonstrates the usage o
 
     <!-- #### Social Sharing  -->
 
-    <!-- 
+    <!--
     The Social Share extension provides a common interface for share buttons.  Learn more about `amp-social-share` [here](/components/amp-social-share/).
     -->
     <p class="heading">
       <amp-social-share type="twitter" width="45" height="33"></amp-social-share>
-      <amp-social-share type="facebook" width="45" height="33" data-attribution=254325784911610></amp-social-share>
+      <amp-social-share type="facebook" width="45" height="33" data-attribution="254325784911610"></amp-social-share>
       <amp-social-share type="gplus" width="45" height="33"></amp-social-share>
       <amp-social-share type="email" width="45" height="33"></amp-social-share>
       <amp-social-share type="pinterest" width="45" height="33"></amp-social-share>
@@ -159,7 +162,7 @@ This is a sample template for a news article in AMP. It demonstrates the usage o
     </p>
 
     <figure>
-      <amp-img src="/img/landscape_village_1280x720.jpg" width=1280 height=768 layout=responsive></amp-img>
+      <amp-img src="/img/landscape_village_1280x853.jpg" width="1280" height="768" layout="responsive"></amp-img>
       <figcaption>Here is a responsive image.</figcaption>
     </figure>
 
@@ -171,7 +174,7 @@ This is a sample template for a news article in AMP. It demonstrates the usage o
     -->
     <div class="amp-ad-container">
       <span>amp-ad</span>
-      <amp-ad width=300 height=250
+      <amp-ad width="300" height="250"
          type="a9"
          data-aax_size="300x250"
          data-aax_pubname="test123"
@@ -194,25 +197,25 @@ This is a sample template for a news article in AMP. It demonstrates the usage o
     <!--
     Use `amp-carousel` for image galleries. Learn more about creating image galleries in AMP [here](/advanced/image_galleries_with_amp-carousel/).
     -->
-    <amp-carousel width="1280" height="970" layout="responsive" type="slides"> 
+    <amp-carousel width="1280" height="970" layout="responsive" type="slides">
       <figure>
-        <amp-img src="/img/landscape_trees_1280x823.jpg" width=1280 height=853 layout=responsive></amp-img>
+        <amp-img src="/img/landscape_trees_1280x960.jpg" width="1280" height="960" layout="responsive"></amp-img>
         <figcaption>This is an image gallery.</figcaption>
       </figure>
       <figure>
-        <amp-img src="/img/landscape_lake_1280x853.jpg" width=1280 height=853 layout=responsive></amp-img>
+        <amp-img src="/img/landscape_lake_1280x857.jpg" width="1280" height="857" layout="responsive"></amp-img>
         <figcaption>Each image has a different caption.</figcaption>
       </figure>
       <figure>
-        <amp-img src="/img/landscape_canyon_1280x853.jpg" width=1280 height=853 layout=responsive></amp-img>
+        <amp-img src="/img/landscape_village_1280x853.jpg" width="1280" height="853" layout="responsive"></amp-img>
         <figcaption>Each image has a different caption.</figcaption>
       </figure>
       <figure>
-        <amp-img src="/img/landscape_hills_1280x853.jpg" width=1280 height=853 layout=responsive></amp-img>
+        <amp-img src="/img/landscape_trees_1280x960.jpg" width="1280" height="960" layout="responsive"></amp-img>
         <figcaption>Each image has a different caption.</figcaption>
       </figure>
       <figure>
-        <amp-img src="/img/landscape_mountains_1280x853.jpg" width=1280 height=853 layout=responsive></amp-img>
+        <amp-img src="/img/landscape_desert_1280x853.jpg" width="1280" height="853" layout="responsive"></amp-img>
         <figcaption>Each image has a different caption.</figcaption>
       </figure>
     </amp-carousel>
@@ -266,9 +269,9 @@ This is a sample template for a news article in AMP. It demonstrates the usage o
     <!--
     It's a good idea to recommend related content to your readers. With `amp-list` it is possible to dynamically include personalized content into your AMPs. It's a good idea to link to the AMP version of related content in order to keep the user in the fast AMP world. Learn more about `amp-list` [here](/components/amp-list/)
     -->
-    <amp-list width=300 height=75 layout=responsive src="/json/related_articles.json">
+    <amp-list width="300" height="75" layout="responsive" src="/json/related_articles.json">
       <template type="amp-mustache">
-        <a class="card related" href={{url}}><amp-img width="101" height="75" src="{{thumbnail}}"></amp-img><span>{{title}}</span></a>
+        <a class="card related" href="{{url}}"><amp-img width="101" height="75" src="{{thumbnail}}"></amp-img><span>{{title}}</span></a>
       </template>
     </amp-list>
 
@@ -278,14 +281,12 @@ This is a sample template for a news article in AMP. It demonstrates the usage o
     <!--
     Use `amp-user-notification` to implement a cookie consent form (if needed). By default, the AMP runtime doesn't use cookies. Some analytics vendors might use require cookies though. Learn more about `amp-user-notification` [here](/components/amp-user-notification/)
     -->
-    <amp-user-notification layout=nodisplay id="amp-user-notification1">
+    <amp-user-notification layout="nodisplay" id="amp-user-notification1">
       This page might use cookies if your analytics vendor requires them.
       <a on="tap:amp-user-notification1.dismiss">Accept</a>
     </amp-user-notification>
 
-    <!--
-    #### Analytics
-    -->
+    <!-- #### User Analytics -->
     <!--
     Analytics must be configured in the body. Here we use Google Analytics to track pageviews.
     -->

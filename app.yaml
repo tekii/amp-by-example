@@ -18,6 +18,21 @@ threadsafe: yes
 default_expiration: 1d
 
 handlers:
+- url: /sw\.js$
+  secure: always
+  static_files: dist/sw.js
+  upload: dist/sw\.js$
+  expiration: 0
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+- url: /playground/sw\.js$
+  secure: always
+  static_files: dist/playground/sw.js
+  upload: dist/playground/sw\.js$
+  expiration: 0
+  http_headers:
+    Access-Control-Allow-Origin: "*"
 
 - url: /favicons
   static_dir: dist/favicons
@@ -55,10 +70,16 @@ handlers:
 skip_files:
 - node_modules
 - scripts
+- playground/node_modules
+- playground/src
+- playground/dist
 - src
-- static
 - spec
+- static
 - tasks
+- android
+- tmp
 - ^(.*/)?.*\.DS_Store$
 - ^(.*/)?.*\.swp$
 - api
+- .git

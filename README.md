@@ -83,7 +83,7 @@ Use HTML comments (`<!-- ... -->`) to document your sample code:
 
 ```html
 <!-- Look! Images in AMP. -->
-<amp-img src="img/image1.jpg" width=200 height=100 layout=responsive></amp-img>
+<amp-img src="img/image1.jpg" width="200" height="100" layout="responsive"></amp-img>
 ```
 
 This works for elements in the header as well:
@@ -101,8 +101,8 @@ Every HTML comment creates a separate example section spanning the following HTM
 ```html
 <!-- This comment spans the whole following div including the two images -->
 <div>
-  <amp-img src="img/image1.jpg" width=200 height=100 layout=responsive></amp-img>
-  <amp-img src="img/image2.jpg" width=200 height=100 layout=responsive></amp-img>
+  <amp-img src="img/image1.jpg" width="200" height="100" layout="responsive"></amp-img>
+  <amp-img src="img/image2.jpg" width="200" height="100" layout="responsive"></amp-img>
 </div>
 ```
 
@@ -112,7 +112,7 @@ Nested comments are not supported:
 <!-- A comment -->
 <div>
   <!-- This does not work -->
-  <amp-img src="img/image1.jpg" width=200 height=100 layout=responsive></amp-img>
+  <amp-img src="img/image1.jpg" width="200" height="100" layout="responsive"></amp-img>
 </div>
 ```
 
@@ -125,7 +125,7 @@ You can use [markdown](https://help.github.com/articles/github-flavored-markdown
   A simple [responsive](https://www.ampproject.org/docs/guides/responsive/control_layout.html)
   image - *width* and *height* are used to determine the aspect ratio.
 -->
-<amp-img src="img/image1.jpg" width=200 height=100 layout=responsive></amp-img>
+<amp-img src="img/image1.jpg" width="200" height="100" layout="responsive"></amp-img>
 ```
 
 #### Drafts
@@ -167,7 +167,7 @@ It is possible to make the preview mode the default version via:
 }--->
 ```
 
-There is a special preview mode for AMP for Ads (A4A) samples:
+There is a special preview mode for AMP Ad samples:
 
 ```json
 <!---{
@@ -190,12 +190,22 @@ If your sample looks better with a single column layout, you can disable the cod
 
 If you need to run or write a sample that depends on the backend server, you can run a local version.
 
-1. Install the [Google App Engine SDK](https://cloud.google.com/appengine/downloads#Google_App_Engine_SDK_for_Go).
-2. Run the backend server in watch mode so it will recompile on change. This assumes that `goapp` is available in your `PATH`, you may need to update your environment accordingly.
+1. Install the [Google App Engine SDK](https://cloud.google.com/appengine/downloads) for Go and follow the instructions for adding `goapp` to your `PATH`.
+2. Run the backend server in watch mode so it will recompile on change.
 
-   ```none
-   $ gulp backend:watch
-   ```
+    ```none
+    $ gulp backend:watch
+    ```
+
+    If you get an error message `can't find import: "golang.org/x/net/context"`, you have to manually install and configure the GO appengine environment:
+
+    ```none
+    # install the google.goland.org/appengine package
+    $ go get google.golang.org/appengine
+    # explicitly set the GOROOT and APPENGINE_DEV_APPSERVER env vars
+    $ export GOROOT=$HOME/local/google-cloud-sdk/platform/google_appengine/goroot 
+    $ export APPENGINE_DEV_APPSERVER=$(which dev_appserver.py) 
+    ```
 
 3. If everything went well, the full site should now be running on <http://localhost:8080/>
 

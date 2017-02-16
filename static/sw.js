@@ -20,6 +20,8 @@ const config = {
   offlinePage: '/youre_offline/'
 }
 
+const IGNORED_URLS = ['shopping_cart']
+
 config.filesToCache = [
     '/',
     '/components/amp-img/',
@@ -42,17 +44,20 @@ config.filesToCache = [
     '/img/ic_link_black_2x_web_18dp.png',
     '/img/ic_menu_white_1x_web_24dp.png',
     '/img/ic_menu_white_2x_web_24dp.png',
+    '/img/ic_indeterminate_check_box_black_24dp_1x.png',
+    '/img/ic_indeterminate_check_box_black_24dp_2x.png',
+    '/img/ic_add_box_black_24dp_1x.png',
+    '/img/ic_add_box_black_24dp_2x.png',
     '/img/ic_chevron_left_black_24dp_1x.png',
     '/img/ic_chevron_left_black_24dp_2x.png',
     '/img/ic_play_arrow_white_1x_web_24dp.png',
     '/img/ic_play_arrow_white_2x_web_24dp.png',
-    '/img/ic_play_circle_filled_white_24dp_1x.png',
-    '/img/ic_play_circle_filled_white_24dp_2x.png',
+    '/img/ic_mode_edit_white_24dp_1x.png',
+    '/img/ic_mode_edit_white_24dp_2x.png',
     '/img/GitHub-Mark-Light-32px.png',
     '/img/GitHub-Mark-Light-64px.png',
-    '/img/abe_device_screenshot_1x.png',
-    '/img/abe_device_screenshot_2x.png',
-    'https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en'
+    '/playground/img/playground-logo.svg',
+    '/playground/'
 ];
 
 /**
@@ -70,7 +75,6 @@ text{
 ]]></style>
 </svg>`;
 }
-
 /**
  * Returns true if the Accept header contains the given content type string.
  */
@@ -88,13 +92,19 @@ function requestAccepts(request, contentType) {
 function ampByExampleHandler(request, values) {
   // for samples show offline page if offline and samples are not cached
   if (requestAccepts(request, 'text/html')) {
-    // never use cached version for AMP CORS requests (e.g. amp-live-list)
-    if (request.url.indexOf("__amp_source_origin") != -1) {
+    // never use cached version for AMP CORS requests (e.g. amp-live-list) or pages that shouldn't be cached
+    if (request.url.indexOf("__amp_source_origin") != -1 || shouldNotCache(request)) {
       return toolbox.networkOnly(request, values);
     }
-    // cache or network - whatever is fastest
-    return toolbox.fastest(request, values).catch(function() {
-        return toolbox.cacheOnly(new Request(config.offlinePage), values);
+    // network first, we always want to get the latest 
+    return toolbox.networkFirst(request, values).catch(function() {
+      return toolbox.cacheOnly(new Request(config.offlinePage), values)
+        .then(function(response) {
+          return response || new Response('You\'re offline. Sorry.', {
+            status: 500,
+            statusText: 'Offline Page Missing'
+          });
+        });
     });
   }
   // always try to load images from the cache first
@@ -109,17 +119,35 @@ function ampByExampleHandler(request, values) {
       );
     });
   } else {
-    // cache all other requests
-    return toolbox.fastest(request, values);
+    // cache first for all other requests
+    return toolbox.cacheFirst(request, values);
   }
 }
 
-toolbox.options.debug = true;
-toolbox.router.default = toolbox.networkOnly;
+function shouldNotCache(request) {
+  return IGNORED_URLS.some(url => request.url.indexOf(url) != -1);
+}
+
+toolbox.options.debug = false;
+toolbox.router.default = toolbox.networkFirst;
 toolbox.router.get('/(.*)', ampByExampleHandler, {origin: self.location.origin});
-// cache first amp runtime 
-toolbox.router.get('/(.*)', toolbox.cacheFirst, {origin: 'https://cdn.ampproject.org'});
-// cache first google fonts
-toolbox.router.get('/(.+)', toolbox.cacheFirst, {origin: /https?:\/\/fonts.+/});
+// network first amp runtime 
+toolbox.router.get('/(.*)', toolbox.networkFirst, {origin: 'https://cdn.ampproject.org'});
 
 toolbox.precache(config.filesToCache);
+
+// Cache the page registering the service worker. Without this, the
+// "first" page the user visits is only cached on the second visit,
+// since the first load is uncontrolled.
+toolbox.precache(
+  clients.matchAll({includeUncontrolled: true}).then(l => {
+    return l.map(c => c.url);
+  })
+);
+
+// Claim clients so that the very first page load is controlled by a service
+// worker. (Important for responding correctly in offline state.)
+self.addEventListener('activate', () => self.clients.claim());
+
+// Make sure the SW the page we register() is the service we use.
+self.addEventListener('install', () => self.skipWaiting());
